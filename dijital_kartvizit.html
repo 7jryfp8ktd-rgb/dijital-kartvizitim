@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadir Furkan Karaoğlu - Dijital Kartvizit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-btn:hover, .glass-btn:active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: rgba(46, 204, 113, 0.9);
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1000;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+        .en-text { display: none; }
+    </style>
+</head>
+
+<body class="antialiased w-full">
+
+    <div class="glass-card max-w-sm w-full mx-auto rounded-3xl p-6 relative">
+        
+        <!-- TR/EN Dil Seçeneği -->
+        <button onclick="toggleLanguage()" class="absolute top-5 right-5 text-white/70 hover:text-white transition">
+            <i class="fa-solid fa-earth-americas text-xl"></i> <span id="lang-indicator" class="text-sm font-bold ml-1">EN</span>
+        </button>
+
+        <!-- Profil Fotoğrafı ve Bilgiler -->
+        <div class="text-center mt-4 mb-6">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQHCOB8o9L1tPQ/profile-displayphoto-crop_800_800/B4DZ9bTUYvKsAM-/0/1783943219348?e=1792022400&v=beta&t=hO_eAESgx8FvP_mcz9sDtlJJIRrt4cdNCjqF3nhEf5k" alt="Profile Picture" class="w-28 h-28 mx-auto rounded-full object-cover border-4 border-white/20 shadow-lg mb-4">
+            <h1 class="text-2xl font-bold tracking-wide">KADİR FURKAN KARAOĞLU</h1>
+            
+            <!-- Profesyonel Bio -->
+            <p class="tr-text text-gray-300 text-sm mt-2 font-medium">Makine ve Uçak Mühendisliği Öğrencisi @ GTÜ<br><span class="text-xs opacity-75">İHA Tasarımı & Eklemeli İmalat</span></p>
+            <p class="en-text text-gray-300 text-sm mt-2 font-medium">Mechanical & Aeronautical Engineering Student @ GTU<br><span class="text-xs opacity-75">UAV Design & Additive Manufacturing</span></p>
+        </div>
+
+        <!-- IBAN Kopyalama Alanı -->
+        <div class="glass-btn rounded-xl p-4 mb-6 flex justify-between items-center cursor-pointer group" onclick="copyIban()">
+            <div class="flex-1">
+                <p class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider tr-text">IBAN Numarası</p>
+                <p class="text-xs text-gray-400 font-semibold mb-1 uppercase tracking-wider en-text">IBAN Number</p>
+                <p class="text-sm font-mono tracking-tight" id="iban-text">TR84 0001 0090 1061 3926 4050 01</p>
+            </div>
+            <div class="bg-white/10 p-3 rounded-lg group-hover:bg-white/20 transition">
+                <i class="fa-regular fa-copy text-xl"></i>
+            </div>
+        </div>
+
+        <!-- İletişim Izgarası (Grid) -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            
+            <!-- Telefon -->
+            <a href="tel:+905541641137" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-solid fa-phone text-2xl mb-2 text-blue-400"></i>
+                <span class="text-xs font-semibold tr-text">Ara</span>
+                <span class="text-xs font-semibold en-text">Call</span>
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="https://wa.me/905541641137" target="_blank" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-brands fa-whatsapp text-2xl mb-2 text-green-400"></i>
+                <span class="text-xs font-semibold">WhatsApp</span>
+            </a>
+
+            <!-- Kişisel E-Posta -->
+            <a href="mailto:karaoglufurkan69@gmail.com" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-solid fa-envelope text-2xl mb-2 text-red-400"></i>
+                <span class="text-xs font-semibold tr-text">Kişisel E-Posta</span>
+                <span class="text-xs font-semibold en-text">Personal Mail</span>
+            </a>
+
+            <!-- Okul E-Posta -->
+            <a href="mailto:k.karaoglu2023@gtu.edu.tr" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-solid fa-graduation-cap text-2xl mb-2 text-yellow-400"></i>
+                <span class="text-xs font-semibold tr-text">Okul E-Posta</span>
+                <span class="text-xs font-semibold en-text">Edu Mail</span>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/kadirfurkankaraoglu" target="_blank" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-brands fa-instagram text-2xl mb-2 text-pink-500"></i>
+                <span class="text-xs font-semibold">Instagram</span>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/furkan-karaoglu-8a4710314/" target="_blank" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-brands fa-linkedin-in text-2xl mb-2 text-blue-500"></i>
+                <span class="text-xs font-semibold">LinkedIn</span>
+            </a>
+
+        </div>
+
+        <!-- Geniş Butonlar (Portfolyo ve CV) -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <a href="https://drive.google.com/file/d/1b_Jzg_6J8NIAoJXPqXzcybT0zbFPBQpr/view?usp=sharing" target="_blank" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-solid fa-briefcase text-2xl mb-2 text-purple-400"></i>
+                <span class="text-xs font-semibold tr-text">Portfolyo</span>
+                <span class="text-xs font-semibold en-text">Portfolio</span>
+            </a>
+            <a href="https://drive.google.com/file/d/1A1HO_I82KQRSwujTQkcO644I4CroAbPy/view?usp=sharing" target="_blank" class="glass-btn flex flex-col items-center justify-center py-4 rounded-xl text-center">
+                <i class="fa-solid fa-file-pdf text-2xl mb-2 text-orange-400"></i>
+                <span class="text-xs font-semibold tr-text">Özgeçmiş (CV)</span>
+                <span class="text-xs font-semibold en-text">Resume (CV)</span>
+            </a>
+        </div>
+
+        <!-- Rehbere Ekle (vCard) -->
+        <button onclick="downloadVCard()" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-4 px-4 rounded-xl shadow-lg transition duration-300 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-address-card text-xl"></i>
+            <span class="tr-text">Rehbere Ekle</span>
+            <span class="en-text">Save to Contacts</span>
+        </button>
+
+    </div>
+
+    <!-- Bildirim (Toast) Mesajı -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-check-circle mr-2"></i>
+        <span id="toast-msg">IBAN Kopyalandı!</span>
+    </div>
+
+    <script>
+        let currentLang = 'tr';
+
+        // Dil Değiştirme Fonksiyonu
+        function toggleLanguage() {
+            const trElements = document.querySelectorAll('.tr-text');
+            const enElements = document.querySelectorAll('.en-text');
+            const indicator = document.getElementById('lang-indicator');
+            
+            if (currentLang === 'tr') {
+                trElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => el.style.display = 'inline-block'); 
+                document.querySelectorAll('p.en-text').forEach(el => el.style.display = 'block');
+                
+                indicator.innerText = 'TR';
+                currentLang = 'en';
+            } else {
+                trElements.forEach(el => el.style.display = 'inline-block');
+                enElements.forEach(el => el.style.display = 'none');
+                document.querySelectorAll('p.tr-text').forEach(el => el.style.display = 'block');
+                
+                indicator.innerText = 'EN';
+                currentLang = 'tr';
+            }
+        }
+
+        // IBAN Kopyalama Fonksiyonu
+        function copyIban() {
+            const rawIban = "TR840001009010613926405001"; 
+            
+            // execCommand as fallback for iframes if clipboard API fails
+            if (navigator.clipboard && window.isSecureContext) {
+                 navigator.clipboard.writeText(rawIban).then(() => {
+                    showToast();
+                }).catch(err => {
+                    console.error('Kopyalama başarısız oldu: ', err);
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = rawIban;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (err) {
+                    console.error('Kopyalama hatası:', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // Bildirim Gösterme
+        function showToast() {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-msg");
+            
+            toastMsg.innerText = currentLang === 'tr' ? "IBAN Kopyalandı!" : "IBAN Copied!";
+            toast.classList.add("show");
+            
+            setTimeout(function(){
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // VCard (Rehbere Ekle) Oluşturma ve İndirme
+        function downloadVCard() {
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:Karaoğlu;Kadir;Furkan;;
+FN:Kadir Furkan Karaoğlu
+ORG:Gebze Teknik Üniversitesi
+TITLE:Makine ve Uçak Mühendisliği (İHA Tasarımı)
+TEL;TYPE=CELL:+905541641137
+EMAIL;TYPE=HOME:karaoglufurkan69@gmail.com
+EMAIL;TYPE=WORK:k.karaoglu2023@gtu.edu.tr
+URL;TYPE=LinkedIn:https://www.linkedin.com/in/furkan-karaoglu-8a4710314/
+URL;TYPE=Instagram:https://www.instagram.com/kadirfurkankaraoglu
+END:VCARD`;
+            
+            const blob = new Blob([vcard], { type: "text/vcard" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "Kadir_Furkan_Karaoglu.vcf";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
